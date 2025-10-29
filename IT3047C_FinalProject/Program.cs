@@ -1,7 +1,13 @@
+using IT3047C_FinalProject.Models;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<HikingContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("HikingContext")));
 
 var app = builder.Build();
 
