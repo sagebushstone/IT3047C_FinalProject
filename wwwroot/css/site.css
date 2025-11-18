@@ -1,0 +1,20 @@
+/* Navbar link overrides for .navbar-brand + .btn-nav */
+.global-nav a.navbar-brand.btn-nav,
+.global-nav a.navbar-brand.btn-nav:link,
+.global-nav a.navbar-brand.btn-nav:visited {
+  color: #ffffff;
+  background-color: #1b6ec2;
+  border: 1px solid #1861ac;
+  padding: .375rem .75rem;
+  border-radius: .25rem;
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* Hover/focus/active states */
+.global-nav a.navbar-brand.btn-nav:hover,
+.global-nav a.navbar-brand.btn-nav:focus {
+  background-color: #155a9a;
+  border-color: #134f82;
+  color: #fff;
+}

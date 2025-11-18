@@ -7,9 +7,15 @@ namespace IT3047C_FinalProject.Controllers
     {
         private HikingContext context {  get; set; }
 
-        private GearController(HikingContext ctx)   
+        public GearController(HikingContext ctx)   
         {
             context = ctx;
+        }
+
+        public IActionResult Gear()
+        {
+            var gears = context.Gears.ToList();
+            return View(gears);
         }
     }
 }
