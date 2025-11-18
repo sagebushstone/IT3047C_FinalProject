@@ -4,5 +4,36 @@
 }
 <div class="trail-background">
     <h1>Trail</h1>
-</div>
 
+    <div>
+        <a asp-controller="Trail" asp-action="Create" class="btn btn-primary">Add Trail</a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Trail Name</th>
+                <th>State</th>
+                <th>Park</th>
+                <th>Difficulty</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.TrailName</td>
+                    <td>@item.State</td>
+                    <td>@item.Park</td>
+                    <td>@item.DifficultyLevel</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.TrailId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.TrailId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.TrailId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

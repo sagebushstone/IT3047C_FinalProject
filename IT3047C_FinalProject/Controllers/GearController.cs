@@ -14,7 +14,8 @@ namespace IT3047C_FinalProject.Controllers
 
         public IActionResult Gear()
         {
-            return View();
+            var gears = context.Gears.ToList();
+            return View(gears);
         }
     }
 }

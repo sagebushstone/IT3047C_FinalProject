@@ -14,8 +14,8 @@ namespace IT3047C_FinalProject.Controllers
 
         public IActionResult Trail()
         {
-            return View();
+            var trails = context.Trails.ToList();
+            return View(trails);
         }
-
     }
 }
