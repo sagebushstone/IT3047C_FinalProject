@@ -1,0 +1,39 @@
+﻿@model IT3047C_FinalProject.Models.Gear
+
+@{
+    ViewData["Gear"] = "Add a Piece of Gear";
+}
+
+<div class="trail-background">
+    <h2>Add Trail</h2>
+
+    <form asp-action="Create" method="post">
+
+        <div class="form-group">
+            <label class="control-label">Gear Name</label>
+            <input asp-for="GearName" class="form-control w-50" />
+            <span asp-validation-for="GearName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Weight">Weight</label>
+            <input asp-for="Weight" class="form-control w-50"/>
+            <span asp-validation-for="Weight" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Cost">Cost</label>
+            <input asp-for="Cost" class="form-control w-50"/>
+            <span asp-validation-for="Cost" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Recommended Quantity</label>
+            <input asp-for="RecommendedQuantity" class="form-control w-50"/>
+            <span asp-validation-for="RecommendedQuantity" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">Save</button>
+        <a asp-action="Gear" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

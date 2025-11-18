@@ -1,0 +1,21 @@
+﻿@model IT3047C_FinalProject.Models.Gear
+
+@{
+    ViewData["Gear"] = "Delete Gear";
+}
+
+<div class="trail-background">
+    <h2>Delete Trail</h2>
+
+    <h3>Are you sure you want to delete this piece of gear?</h3>
+
+    <div>
+        <strong>@Model.GearName</strong><br />
+    </div>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="GearId" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-action="Gear" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
