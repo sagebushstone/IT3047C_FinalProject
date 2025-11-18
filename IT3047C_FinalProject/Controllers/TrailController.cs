@@ -7,9 +7,14 @@ namespace IT3047C_FinalProject.Controllers
     {
         private HikingContext context { get; set; }
 
-        private TrailController(HikingContext ctx)
+        public TrailController(HikingContext ctx)
         {
             context = ctx;
+        }
+
+        public IActionResult Trail()
+        {
+            return View();
         }
 
     }
