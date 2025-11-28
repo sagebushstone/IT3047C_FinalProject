@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Trail Page";
+}
+<div class="trail-background">
+    <h1>Random Trail Picker</h1>
+    <p>Click the button and get a random hike to go on! This is a great way to broaden your horizons and try something new.</p>
+
+    <form asp-action="RandomTrail">
+        <button type="submit" class="btn btn-success">Random!</button>
+    </form>
+    <br />
+
+    <h3>@Model.TrailName</h3>
+    <p>State: @Model.State</p>
+    <p>Park: @Model.Park</p>
+    <p>Difficulty: @Model.DifficultyLevel</p>
+    <p>@Model.Description</p>
+</div>
