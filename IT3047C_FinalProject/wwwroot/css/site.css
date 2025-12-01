@@ -186,6 +186,32 @@ body {
     padding: 1rem;
 }
 
+.bio-background {
+    background-color: beige;
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    min-height: 0;
+    padding: 1rem;
+}
+
+.bio-styling {
+    border: 4px groove #000000;
+    padding: 2em;
+    background-color: #ffffff;
+}
+
+.bio-styling p {
+    text-decoration: underline;
+}
+
+.bio-styling td {
+    border: 2px solid #000000;
+    padding: 1em;
+}
+
 .footer {
     position: static;
     height: 72px;
