@@ -6,10 +6,13 @@ namespace IT3047C_FinalProject.Controllers
     public class TrailController : Controller
     {
         private HikingContext context { get; set; }
+        private static Random rand {  get; set; }
+        private static int prevTrailIdx { get; set; }
 
         public TrailController(HikingContext ctx)
         {
             context = ctx;
+            rand = new Random();
         }
 
         public IActionResult Trail()
@@ -17,6 +20,23 @@ namespace IT3047C_FinalProject.Controllers
             var trails = context.Trails.ToList();
             return View(trails);
         }
+
+        public IActionResult RandomTrail()
+        {
+            var allTrails = context.Trails.ToList();
+            var randIndex = rand.Next(allTrails.Count);
+
+            // loop so it doesn't return the same trail twice in a row
+            while (randIndex == prevTrailIdx)
+            {
+                randIndex = rand.Next(allTrails.Count);
+            }
+
+            var randTrail = allTrails[randIndex];
+            prevTrailIdx = randIndex;
+            return View(randTrail);
+        }
+
         public IActionResult Create()
         {
             return View();
