@@ -1,0 +1,75 @@
+﻿@model IT3047C_FinalProject.Models.Trail
+
+@{
+    ViewData["Title"] = "Trail Details";
+    var recommendation = ViewBag.Recommendation as IT3047C_FinalProject.Models.Recommendation;
+}
+
+<div class="trail-background">
+    <h1>@Model.TrailName</h1>
+
+    <h4>Description</h4>
+    <p>@Model.Description</p>
+
+    <dl class="row">
+        <dt class="col-sm-3">Park</dt>
+        <dd class="col-sm-9">@Model.Park</dd>
+
+        <dt class="col-sm-3">State</dt>
+        <dd class="col-sm-9">@Model.State</dd>
+
+        <dt class="col-sm-3">Difficulty</dt>
+        <dd class="col-sm-9">@Model.DifficultyLevel</dd>
+    </dl>
+
+    @if (recommendation != null)
+    {
+        <section class="recommendation mt-4">
+            <h4>Recommended Gear</h4>
+
+            @if (recommendation.Items != null && recommendation.Items.Any())
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Gear</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in recommendation.Items)
+                        {
+                            <tr>
+                                <td>
+                                    @if (item.Gear != null)
+                                    {
+                                        @item.Gear.GearName
+                                    }
+                                    else
+                                    {
+                                        @($"Gear ID: {item.GearId}")
+                                    }
+                                </td>
+                                <td>@item.Quantity</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <a asp-controller="Recommendation" asp-action="Edit" asp-route-id="@recommendation.RecommendationId" class="btn btn-secondary">Edit Recommendation</a>
+            }
+            else
+            {
+                <div>
+                    <p class="text-muted">No gear items have been added to this recommendation yet.</p>
+                </div>
+            }
+        </section>
+    }
+    else
+    {
+        <p class="text-muted mt-4">No recommendation exists for this trail.</p>
+
+        <a asp-controller="Recommendation" asp-action="CreateAndEdit" asp-route-trailId="@Model.TrailId" class="btn btn-primary">Add Recommendation</a>
+    }
+</div>
