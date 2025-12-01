@@ -1,12 +1,13 @@
 ﻿using IT3047C_FinalProject.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace IT3047C_FinalProject.Controllers
 {
     public class TrailController : Controller
     {
         private HikingContext context { get; set; }
-        private static Random rand {  get; set; }
+        private static Random rand { get; set; }
         private static int prevTrailIdx { get; set; }
 
         public TrailController(HikingContext ctx)
@@ -21,12 +22,25 @@ namespace IT3047C_FinalProject.Controllers
             return View(trails);
         }
 
+        public IActionResult Details(int id)
+        {
+            var trail = context.Trails.FirstOrDefault(t => t.TrailId == id);
+            if (trail == null) return NotFound();
+
+            var recommendation = context.Recommendations
+                .Include(r => r.Items)
+                    .ThenInclude(i => i.Gear)
+                .FirstOrDefault(r => r.TrailId == id);
+
+            ViewBag.Recommendation = recommendation;
+            return View(trail);
+        }
+
         public IActionResult RandomTrail()
         {
             var allTrails = context.Trails.ToList();
             var randIndex = rand.Next(allTrails.Count);
 
-            // loop so it doesn't return the same trail twice in a row
             while (randIndex == prevTrailIdx)
             {
                 randIndex = rand.Next(allTrails.Count);

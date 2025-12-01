@@ -1,0 +1,111 @@
+@model IT3047C_FinalProject.Models.Recommendation
+
+@{
+    ViewData["Title"] = "Edit Recommendation";
+    var allGears = ViewBag.AllGears as List<IT3047C_FinalProject.Models.Gear> ?? new List<IT3047C_FinalProject.Models.Gear>();
+    var items = Model.Items?.ToList() ?? new List<IT3047C_FinalProject.Models.RecommendationItem>();
+}
+
+<div class="container mt-3">
+    <h2>Edit Recommendation for @Model.Trail?.TrailName</h2>
+
+    <div class="mb-3">
+        <a asp-controller="Trail" asp-action="Details" asp-route-id="@Model.TrailId" class="btn btn-link">Back to Trail</a>
+    </div>
+
+    <section class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Recommended Gear</h5>
+
+            @if (items.Any())
+            {
+                <form asp-controller="Recommendation" asp-action="SaveAllItems" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="RecommendationId" value="@Model.RecommendationId" />
+
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Gear</th>
+                                <th style="width:120px">Quantity</th>
+                                <th style="width:160px">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < items.Count; i++)
+                            {
+                                var item = items[i];
+                                <tr>
+                                    <td>
+                                        @if (item.Gear != null)
+                                        {
+                                            @item.Gear.GearName
+                                        }
+                                        else
+                                        {
+                                            @($"Gear ID: {item.GearId}")
+                                        }
+                                    </td>
+                                    <td>
+                                        <input type="hidden" name="Items[@i].RecommendationItemId" value="@item.RecommendationItemId" />
+                                        <input type="number" name="Items[@i].Quantity" value="@item.Quantity" min="1" class="form-control form-control-sm" style="width:90px" />
+                                    </td>
+                                    <td>
+                                        <button type="submit" formaction="#" onclick="document.getElementById('delete-form-@item.RecommendationItemId').submit(); return false;" class="btn btn-sm btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">Save All</button>
+                        <a asp-controller="Recommendation" asp-action="Index" class="btn btn-link">Back to Recommendations</a>
+                    </div>
+                </form>
+
+                @foreach (var item in items)
+                {
+                    <form id="delete-form-@item.RecommendationItemId" asp-controller="Recommendation" asp-action="DeleteItem" method="post" style="display:none;">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="recommendationItemId" value="@item.RecommendationItemId" />
+                    </form>
+                }
+            }
+            else
+            {
+                <p class="text-muted">No gear items added yet.</p>
+            }
+        </div>
+    </section>
+
+    <section class="card">
+        <div class="card-body">
+            <h5 class="card-title">Add Gear</h5>
+            <form asp-controller="Recommendation" asp-action="AddItem" method="post" class="row g-2 align-items-end">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="recommendationId" value="@Model.RecommendationId" />
+
+                <div class="col-auto" style="min-width:280px">
+                    <label class="form-label">Gear</label>
+                    <select name="gearId" class="form-select">
+                        <option value="">-- select gear --</option>
+                        @foreach (var g in allGears)
+                        {
+                            <option value="@g.GearId">@g.GearName</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-auto">
+                    <label class="form-label">Quantity</label>
+                    <input type="number" name="quantity" min="1" value="1" class="form-control" style="width:120px" />
+                </div>
+
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-success">Add Item</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
